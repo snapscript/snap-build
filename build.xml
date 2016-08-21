@@ -72,6 +72,7 @@
          <fileset dir="${target.path}">
             <include name="snap-${snap.version}.jar"/>
             <include name="snap-${snap.version}-sources.jar"/>
+            <include name="snap-${snap.version}-javadoc.jar"/>
          </fileset>
          <fileset dir="${root.path}">
             <include name="pom.xml"/>
@@ -86,7 +87,7 @@
       <!-- search and replace "</version>" with "<version>x.x.x</version>" -->
       <replace file="${maven.path}-metadata.xml">
          <replacetoken><![CDATA[</versions>]]></replacetoken>
-         <replacevalue><![CDATA[  <version>@version@</version>
+         <replacevalue><![CDATA[  <version>@snap.version@</version>
     </versions>]]></replacevalue>
       </replace> 
       <!-- copy "target/maven-metadata.xml" to "target/maven" -->
@@ -111,6 +112,12 @@
          <arg value="--passphrase"/>
          <arg value="${password}"/>
          <arg value="${maven.path}/${snap.version}/snap-${snap.version}-sources.jar"/>
+      </exec>
+      <exec executable="gpg">
+         <arg value="-ab"/>
+         <arg value="--passphrase"/>
+         <arg value="${password}"/>
+         <arg value="${maven.path}/${snap.version}/snap-${snap.version}-javadoc.jar"/>
       </exec>
       <exec executable="gpg">
          <arg value="-ab"/>
