@@ -2,38 +2,29 @@
 <project name="Snap" default="bundle" basedir=".">
 
    <target name="usage">
-      <echo message="maven-archive - Packages a maven execution in to a deployable archive"/>
+      <echo message="bundle - Packages a maven execution in to a deployable archive"/>
    </target>
 
    <target name="-layout">
       <property name="root.path" value="."/>
       <property name="source.path" value="src"/>                
       <property name="main.source.path" value="src/main/java"/>            
-      <property name="main.package.path" value="src/package/java"/>     
-      <property name="maven.path" value="maven"/> 
       <property name="template.path" value="template"/> 
       <property name="build.path" value="build"/>
-      <property name="main.build.path" value="build/main"/>            
-      <property name="test.build.path" value="build/test"/>
-      <property name="obfuscated.path" value="obfuscated"/>
-      <property name="package.path" value="package"/>
       <property name="target.path" value="target"/>    
+      <property name="maven.path" value="${target.path}/maven"/>
       <property file="build.properties"/>
-      <property file="ssh.properties"/>
    </target>
 
    <target name="clean" depends="-layout">
       <delete dir="${build.path}"/>
-      <delete dir="${jar.path}"/>
       <delete dir="${maven.path}"/>
-      <delete dir="${maven.source.path}"/>
+      <delete dir="${main.source.path}"/>
    </target>
 
    <target name="-prepare" depends="clean">
-      <mkdir dir="${maven.path}"/>
       <mkdir dir="${build.path}"/>
-      <mkdir dir="${main.build.path}"/>
-      <mkdir dir="${test.build.path}"/>
+      <mkdir dir="${maven.path}"/>
       <mkdir dir="${main.source.path}"/>
    </target>
    
@@ -55,6 +46,10 @@
           <include name="**/*.java"/>
         </fileset>
       </copy>
+      <exec executable="mvn">
+         <arg value="clean"/>
+         <arg value="install"/>
+      </exec>
    </target>
 
    <target name="bundle" depends="-build">
@@ -68,12 +63,12 @@
          </filterset>
       </copy>
       <!-- delete the "target/maven" folder -->
-      <delete dir="${target.path}/maven"/>       
-      <mkdir dir="${target.path}/maven"/>
+      <delete dir="${maven.path}"/>       
+      <mkdir dir="${maven.path}"/>
       <!-- create a "target/maven/x.x.x" folder -->
-      <mkdir dir="${target.path}/maven/${snap.version}"/>
+      <mkdir dir="${maven.path}/${snap.version}"/>
       <!-- copy the "snap-x.x.x.jar" file to the "target/maven/x.x.x" folder -->
-      <copy todir="${target.path}/maven/${snap.version}">
+      <copy todir="${maven.path}/${snap.version}">
          <fileset dir="${target.path}">
             <include name="snap-${snap.version}.jar"/>
             <include name="snap-${snap.version}-sources.jar"/>
@@ -89,13 +84,13 @@
          </fileset>   
       </copy>      
       <!-- search and replace "</version>" with "<version>x.x.x</version>" -->
-      <replace file="${target.path}/maven-metadata.xml">
+      <replace file="${maven.path}-metadata.xml">
          <replacetoken><![CDATA[</versions>]]></replacetoken>
          <replacevalue><![CDATA[  <version>@version@</version>
     </versions>]]></replacevalue>
       </replace> 
       <!-- copy "target/maven-metadata.xml" to "target/maven" -->
-      <copy todir="${target.path}/maven">
+      <copy todir="${maven.path}">
          <fileset dir="${target.path}">
             <include name="maven-metadata.xml"/>             
          </fileset>   
@@ -104,41 +99,41 @@
          </filterset>        
       </copy> 
       <!-- move "target/maven/x.x.x/pom.xml" to "target/maven/x.x.x/snap-x.x.pom" -->
-      <move file="${target.path}/maven/${snap.version}/pom.xml" tofile="${target.path}/maven/${snap.version}/snap-${snap.version}.pom"/>
+      <move file="${maven.path}/${snap.version}/pom.xml" tofile="${maven.path}/${snap.version}/snap-${snap.version}.pom"/>
       <exec executable="gpg">
          <arg value="-ab"/>
          <arg value="--passphrase"/>
          <arg value="${password}"/>
-         <arg value="${target.path}/maven/${snap.version}/snap-${snap.version}.jar"/>
+         <arg value="${maven.path}/${snap.version}/snap-${snap.version}.jar"/>
       </exec>
       <exec executable="gpg">
          <arg value="-ab"/>
          <arg value="--passphrase"/>
          <arg value="${password}"/>
-         <arg value="${target.path}/maven/${snap.version}/snap-${snap.version}-sources.jar"/>
+         <arg value="${maven.path}/${snap.version}/snap-${snap.version}-sources.jar"/>
       </exec>
       <exec executable="gpg">
          <arg value="-ab"/>
          <arg value="--passphrase"/>
          <arg value="${password}"/>
-         <arg value="${target.path}/maven/${snap.version}/snap-${snap.version}.pom"/>
+         <arg value="${maven.path}/${snap.version}/snap-${snap.version}.pom"/>
       </exec>
-      <!--checksum file="${target.path}/maven/${snap.version}/snap-${snap.version}.jar" algorithm="SHA1" fileext=".sha1"/>
-      <checksum file="${target.path}/maven/${snap.version}/snap-${snap.version}.jar" algorithm="MD5" fileext=".md5"/>      
-      <checksum file="${target.path}/maven/${snap.version}/snap-${snap.version}.jar.asc" algorithm="SHA1" fileext=".sha1"/>
-      <checksum file="${target.path}/maven/${snap.version}/snap-${snap.version}.jar.asc" algorithm="MD5" fileext=".md5"/>
-      <checksum file="${target.path}/maven/${snap.version}/snap-${snap.version}-sources.jar" algorithm="SHA1" fileext=".sha1"/>
-      <checksum file="${target.path}/maven/${snap.version}/snap-${snap.version}-sources.jar" algorithm="MD5" fileext=".md5"/> 
-      <checksum file="${target.path}/maven/${snap.version}/snap-${snap.version}-sources.jar.asc" algorithm="SHA1" fileext=".sha1"/>
-      <checksum file="${target.path}/maven/${snap.version}/snap-${snap.version}-sources.jar.asc" algorithm="MD5" fileext=".md5"/>
-      <checksum file="${target.path}/maven/${snap.version}/snap-${snap.version}.pom" algorithm="SHA1" fileext=".sha1"/>
-      <checksum file="${target.path}/maven/${snap.version}/snap-${snap.version}.pom" algorithm="MD5" fileext=".md5"/>
-      <checksum file="${target.path}/maven/${snap.version}/snap-${snap.version}.pom.asc" algorithm="SHA1" fileext=".sha1"/>
-      <checksum file="${target.path}/maven/${snap.version}/snap-${snap.version}.pom.asc" algorithm="MD5" fileext=".md5"/>
-      <checksum file="${target.path}/maven/maven-metadata.xml" algorithm="SHA1" fileext=".sha1"/>
-      <checksum file="${target.path}/maven/maven-metadata.xml" algorithm="MD5" fileext=".md5"/-->    
-      <zip destfile="${build.path}/maven-${snap.version}.zip" basedir="${target.path}/maven"/>      
-      <jar destfile="${build.path}/bundle-${snap.version}.jar" basedir="${target.path}/maven/${snap.version}"/>
+      <!--checksum file="${maven.path}/${snap.version}/snap-${snap.version}.jar" algorithm="SHA1" fileext=".sha1"/>
+      <checksum file="${maven.path}/${snap.version}/snap-${snap.version}.jar" algorithm="MD5" fileext=".md5"/>      
+      <checksum file="${maven.path}/${snap.version}/snap-${snap.version}.jar.asc" algorithm="SHA1" fileext=".sha1"/>
+      <checksum file="${maven.path}/${snap.version}/snap-${snap.version}.jar.asc" algorithm="MD5" fileext=".md5"/>
+      <checksum file="${maven.path}/${snap.version}/snap-${snap.version}-sources.jar" algorithm="SHA1" fileext=".sha1"/>
+      <checksum file="${maven.path}/${snap.version}/snap-${snap.version}-sources.jar" algorithm="MD5" fileext=".md5"/> 
+      <checksum file="${maven.path}/${snap.version}/snap-${snap.version}-sources.jar.asc" algorithm="SHA1" fileext=".sha1"/>
+      <checksum file="${maven.path}/${snap.version}/snap-${snap.version}-sources.jar.asc" algorithm="MD5" fileext=".md5"/>
+      <checksum file="${maven.path}/${snap.version}/snap-${snap.version}.pom" algorithm="SHA1" fileext=".sha1"/>
+      <checksum file="${maven.path}/${snap.version}/snap-${snap.version}.pom" algorithm="MD5" fileext=".md5"/>
+      <checksum file="${maven.path}/${snap.version}/snap-${snap.version}.pom.asc" algorithm="SHA1" fileext=".sha1"/>
+      <checksum file="${maven.path}/${snap.version}/snap-${snap.version}.pom.asc" algorithm="MD5" fileext=".md5"/>
+      <checksum file="${maven.path}/maven-metadata.xml" algorithm="SHA1" fileext=".sha1"/>
+      <checksum file="${maven.path}/maven-metadata.xml" algorithm="MD5" fileext=".md5"/-->    
+      <zip destfile="${build.path}/maven-${snap.version}.zip" basedir="${maven.path}"/>      
+      <jar destfile="${build.path}/bundle-${snap.version}.jar" basedir="${maven.path}/${snap.version}"/>
    </target>
 
 </project>

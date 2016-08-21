@@ -1,1 +1,1 @@
-mvn -DcreateChecksum=true install
+This should be run on Linux/Mac for gpg
