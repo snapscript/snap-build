@@ -121,24 +121,20 @@
          <arg value="-ab"/>
          <arg value="--passphrase"/>
          <arg value="${password}"/>
-         <arg value="${target.path}/maven/${snap.version}/simple-xml-${snap.version}.pom"/>
+         <arg value="${target.path}/maven/${snap.version}/snap-${snap.version}.pom"/>
       </exec>
-      <!--checksum file="${target.path}/maven/${snap.version}/simple-xml-${snap.version}.jar" algorithm="SHA1" fileext=".sha1"/>
-      <checksum file="${target.path}/maven/${snap.version}/simple-xml-${snap.version}.jar" algorithm="MD5" fileext=".md5"/>      
-      <checksum file="${target.path}/maven/${snap.version}/simple-xml-${snap.version}.jar.asc" algorithm="SHA1" fileext=".sha1"/>
-      <checksum file="${target.path}/maven/${snap.version}/simple-xml-${snap.version}.jar.asc" algorithm="MD5" fileext=".md5"/>
-      <checksum file="${target.path}/maven/${snap.version}/simple-xml-${snap.version}-sources.jar" algorithm="SHA1" fileext=".sha1"/>
-      <checksum file="${target.path}/maven/${snap.version}/simple-xml-${snap.version}-sources.jar" algorithm="MD5" fileext=".md5"/> 
-      <checksum file="${target.path}/maven/${snap.version}/simple-xml-${snap.version}-sources.jar.asc" algorithm="SHA1" fileext=".sha1"/>
-      <checksum file="${target.path}/maven/${snap.version}/simple-xml-${snap.version}-sources.jar.asc" algorithm="MD5" fileext=".md5"/>
-      <checksum file="${target.path}/maven/${snap.version}/simple-xml-${snap.version}-javadoc.jar" algorithm="SHA1" fileext=".sha1"/>
-      <checksum file="${target.path}/maven/${snap.version}/simple-xml-${snap.version}-javadoc.jar" algorithm="MD5" fileext=".md5"/>
-      <checksum file="${target.path}/maven/${snap.version}/simple-xml-${snap.version}-javadoc.jar.asc" algorithm="SHA1" fileext=".sha1"/>
-      <checksum file="${target.path}/maven/${snap.version}/simple-xml-${snap.version}-javadoc.jar.asc" algorithm="MD5" fileext=".md5"/>
-      <checksum file="${target.path}/maven/${snap.version}/simple-xml-${snap.version}.pom" algorithm="SHA1" fileext=".sha1"/>
-      <checksum file="${target.path}/maven/${snap.version}/simple-xml-${snap.version}.pom" algorithm="MD5" fileext=".md5"/>
-      <checksum file="${target.path}/maven/${snap.version}/simple-xml-${snap.version}.pom.asc" algorithm="SHA1" fileext=".sha1"/>
-      <checksum file="${target.path}/maven/${snap.version}/simple-xml-${snap.version}.pom.asc" algorithm="MD5" fileext=".md5"/>
+      <!--checksum file="${target.path}/maven/${snap.version}/snap-${snap.version}.jar" algorithm="SHA1" fileext=".sha1"/>
+      <checksum file="${target.path}/maven/${snap.version}/snap-${snap.version}.jar" algorithm="MD5" fileext=".md5"/>      
+      <checksum file="${target.path}/maven/${snap.version}/snap-${snap.version}.jar.asc" algorithm="SHA1" fileext=".sha1"/>
+      <checksum file="${target.path}/maven/${snap.version}/snap-${snap.version}.jar.asc" algorithm="MD5" fileext=".md5"/>
+      <checksum file="${target.path}/maven/${snap.version}/snap-${snap.version}-sources.jar" algorithm="SHA1" fileext=".sha1"/>
+      <checksum file="${target.path}/maven/${snap.version}/snap-${snap.version}-sources.jar" algorithm="MD5" fileext=".md5"/> 
+      <checksum file="${target.path}/maven/${snap.version}/snap-${snap.version}-sources.jar.asc" algorithm="SHA1" fileext=".sha1"/>
+      <checksum file="${target.path}/maven/${snap.version}/snap-${snap.version}-sources.jar.asc" algorithm="MD5" fileext=".md5"/>
+      <checksum file="${target.path}/maven/${snap.version}/snap-${snap.version}.pom" algorithm="SHA1" fileext=".sha1"/>
+      <checksum file="${target.path}/maven/${snap.version}/snap-${snap.version}.pom" algorithm="MD5" fileext=".md5"/>
+      <checksum file="${target.path}/maven/${snap.version}/snap-${snap.version}.pom.asc" algorithm="SHA1" fileext=".sha1"/>
+      <checksum file="${target.path}/maven/${snap.version}/snap-${snap.version}.pom.asc" algorithm="MD5" fileext=".md5"/>
       <checksum file="${target.path}/maven/maven-metadata.xml" algorithm="SHA1" fileext=".sha1"/>
       <checksum file="${target.path}/maven/maven-metadata.xml" algorithm="MD5" fileext=".md5"/-->    
       <zip destfile="${build.path}/maven-${snap.version}.zip" basedir="${target.path}/maven"/>      
