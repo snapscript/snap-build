@@ -3,7 +3,7 @@
   <groupId>org.snapscript</groupId>
   <artifactId>snap</artifactId>
   <packaging>jar</packaging>
-  <version>1.0</version>
+  <version>@snap.version@</version>
   <name>Snap</name>
   <url>http://www.snapscript.org</url>
   <description>Dynamic scripting for the JVM</description>
