@@ -12,13 +12,12 @@
       <property name="template.path" value="template"/> 
       <property name="build.path" value="build"/>
       <property name="target.path" value="target"/>    
-      <property name="maven.path" value="${target.path}/maven"/>
+      <property name="maven.path" value="${root.path}/maven"/>
       <property file="build.properties"/>
    </target>
 
    <target name="-clean" depends="-layout">
       <delete dir="${build.path}"/>
-      <delete dir="${maven.path}"/>
       <delete dir="${main.source.path}"/>
    </target>
 
@@ -121,11 +120,13 @@
          <arg value="${maven.path}/${snap.artifact}/${snap.version}/${snap.artifact}-${snap.version}.pom"/>
       </exec>
       <zip destfile="${maven.path}/${snap.artifact}-maven-${snap.version}.zip" basedir="${maven.path}/${snap.artifact}"/>      
-      <jar destfile="${mavtn.path}/${snap.artifact}-bundle-${snap.version}.jar" basedir="${maven.path}/${snap.artifact}/${snap.version}"/>
+      <jar destfile="${maven.path}/${snap.artifact}/bundle-${snap.version}.jar" basedir="${maven.path}/${snap.artifact}/${snap.version}"/>
    </target>
    
       
    <target name="-bundle-snap" depends="-layout">
+      <delete dir="${main.source.path}"/>
+      <mkdir dir="${main.source.path}"/>
       <copy todir="${root.path}" overwrite="true">
          <fileset dir="${template.path}">
             <include name="pom.xml"/>
@@ -160,8 +161,10 @@
         <param name="snap.artifact" value="snap"/>   
       </antcall>
    </target>
-   
+
    <target name="-bundle-snap-android" depends="-layout">
+      <delete dir="${main.source.path}"/>
+      <mkdir dir="${main.source.path}"/>
       <copy todir="${root.path}" overwrite="true">
          <fileset dir="${template.path}">
             <include name="pom.xml"/>
@@ -192,7 +195,14 @@
         </fileset>
         <fileset dir="${snap.root}/snap-external/snap-bridge/src/main/java">
           <include name="**/*.java"/>
-        </fileset>       
+          <exclude name="**/standard/**"/>
+        </fileset>
+        <fileset dir="${snap.root}/snap-external/snap-asm/src/main/java">
+          <include name="**/*.java"/>
+        </fileset>
+        <fileset dir="${snap.root}/snap-external/snap-cglib/src/main/java">
+          <include name="**/*.java"/>
+        </fileset>                
       </copy>
       <exec executable="${maven.exe}">
          <arg value="clean"/>
@@ -200,10 +210,13 @@
       </exec>
       <antcall target="-bundle">
         <param name="snap.artifact" value="snap-android"/>   
-      </antcall>      
-   </target>
+      </antcall>            
+   </target>   
+
    
    <target name="-bundle-snap-all" depends="-layout">
+      <delete dir="${main.source.path}"/>
+      <mkdir dir="${main.source.path}"/>
       <copy todir="${root.path}" overwrite="true">
          <fileset dir="${template.path}">
             <include name="pom.xml"/>
