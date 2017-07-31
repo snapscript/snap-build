@@ -197,12 +197,6 @@
           <include name="**/*.java"/>
           <exclude name="**/standard/**"/>
         </fileset>
-        <fileset dir="${snap.root}/snap-external/snap-asm/src/main/java">
-          <include name="**/*.java"/>
-        </fileset>
-        <fileset dir="${snap.root}/snap-external/snap-cglib/src/main/java">
-          <include name="**/*.java"/>
-        </fileset>                
       </copy>
       <exec executable="${maven.exe}">
          <arg value="clean"/>
