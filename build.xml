@@ -152,6 +152,9 @@
         <fileset dir="${snap.root}/snap/snap-parse/src/main/java">
           <include name="**/*.java"/>
         </fileset>
+        <fileset dir="${snap.root}/snap/snap-parse/src/main/resources">
+          <include name="**/*.bnf"/>
+        </fileset>
         <fileset dir="${snap.root}/snap/snap-core/src/main/java">
           <include name="**/*.java"/>
         </fileset>
@@ -292,6 +295,9 @@
         </fileset>
         <fileset dir="${snap.root}/snap/snap-parse/src/main/java">
           <include name="**/*.java"/>
+        </fileset>
+        <fileset dir="${snap.root}/snap/snap-parse/src/main/resources">
+          <include name="**/*.bnf"/>
         </fileset>
         <fileset dir="${snap.root}/snap/snap-core/src/main/java">
           <include name="**/*.java"/>
