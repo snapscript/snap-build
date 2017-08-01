@@ -8,7 +8,8 @@
    <target name="-layout">
       <property name="root.path" value="."/>
       <property name="source.path" value="src"/>                
-      <property name="main.source.path" value="src/main/java"/>            
+      <property name="main.source.path" value="src/main/java"/>
+      <property name="main.resource.path" value="src/main/resources"/>            
       <property name="template.path" value="template"/> 
       <property name="build.path" value="build"/>
       <property name="target.path" value="target"/>    
@@ -152,11 +153,13 @@
         <fileset dir="${snap.root}/snap/snap-parse/src/main/java">
           <include name="**/*.java"/>
         </fileset>
-        <fileset dir="${snap.root}/snap/snap-parse/src/main/resources">
-          <include name="**/*.bnf"/>
-        </fileset>
         <fileset dir="${snap.root}/snap/snap-core/src/main/java">
           <include name="**/*.java"/>
+        </fileset>
+      </copy>
+      <copy todir="${main.resource.path}" overwrite="true">
+        <fileset dir="${snap.root}/snap/snap-parse/src/main/resources">
+          <include name="**/*.bnf"/>
         </fileset>
       </copy>
       <exec executable="${maven.exe}">
@@ -296,9 +299,6 @@
         <fileset dir="${snap.root}/snap/snap-parse/src/main/java">
           <include name="**/*.java"/>
         </fileset>
-        <fileset dir="${snap.root}/snap/snap-parse/src/main/resources">
-          <include name="**/*.bnf"/>
-        </fileset>
         <fileset dir="${snap.root}/snap/snap-core/src/main/java">
           <include name="**/*.java"/>
         </fileset>
@@ -317,6 +317,11 @@
         <fileset dir="${snap.root}/snap-external/snap-cglib/src/main/java">
           <include name="**/*.java"/>
         </fileset>                
+      </copy>
+      <copy todir="${main.resource.path}" overwrite="true">
+        <fileset dir="${snap.root}/snap/snap-parse/src/main/resources">
+          <include name="**/*.bnf"/>
+        </fileset>
       </copy>
       <exec executable="${maven.exe}">
          <arg value="clean"/>
