@@ -4,7 +4,7 @@
   <artifactId>@snap.artifact@</artifactId>
   <packaging>jar</packaging>
   <version>@snap.version@</version>
-  <name>Snap</name>
+  <name>@snap.name@</name>
   <url>http://www.snapscript.org</url>
   <description>Dynamic scripting for the JVM</description>
   <licenses>
@@ -15,9 +15,9 @@
     </license>
   </licenses>
   <scm>
-    <url>https://github.com/snapscript/snap</url>
-    <connection>scm:git:git://github.com/snapscript/snap.git</connection>
-    <developerConnection>scm:git:git@github.com:snapscript/snap.git</developerConnection>
+    <url>https://github.com/snapscript/@snap.repo@</url>
+    <connection>scm:git:git://github.com/snapscript/@snap.repo@.git</connection>
+    <developerConnection>scm:git:git@github.com:snapscript/@snap.repo@.git</developerConnection>
   </scm>
   <developers>
     <developer>
@@ -25,7 +25,8 @@
       <name>Niall Gallagher</name>
       <email>niallg@users.sf.net</email>
     </developer>
-  </developers> 
+  </developers>
+  @snap.deps@ 
   <build>
     <plugins>
       <plugin>

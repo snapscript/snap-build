@@ -133,6 +133,9 @@
          </fileset>
          <filterset>
             <filter token="snap.artifact" value="snap"/>
+            <filter token="snap.deps" value=""/>
+            <filter token="snap.name" value="Snap"/>
+            <filter token="snap.repo" value="snap"/>
             <filtersfile file="${root.path}/build.properties"/>
          </filterset>
       </copy>
@@ -171,25 +174,13 @@
          </fileset>
          <filterset>
             <filter token="snap.artifact" value="snap-android"/>
+            <filter token="snap.deps" value="&lt;dependencies&gt;&lt;dependency&gt;&lt;groupId&gt;org.snapscript&lt;/groupId&gt;&lt;artifactId&gt;snap&lt;/artifactId&gt;&lt;version&gt;${snap.version}&lt;/version&gt;&lt;/dependency&gt;&lt;/dependencies&gt;"/>
+            <filter token="snap.name" value="Snap Android"/>
+            <filter token="snap.repo" value="snap-external"/>
             <filtersfile file="${root.path}/build.properties"/>
          </filterset>
       </copy>
       <copy todir="${main.source.path}" overwrite="true">
-        <fileset dir="${snap.root}/snap/snap-compile/src/main/java">
-          <include name="**/*.java"/>
-        </fileset>              
-        <fileset dir="${snap.root}/snap/snap-tree/src/main/java">
-          <include name="**/*.java"/>
-        </fileset>
-        <fileset dir="${snap.root}/snap/snap-common/src/main/java">
-          <include name="**/*.java"/>
-        </fileset>
-        <fileset dir="${snap.root}/snap/snap-parse/src/main/java">
-          <include name="**/*.java"/>
-        </fileset>
-        <fileset dir="${snap.root}/snap/snap-core/src/main/java">
-          <include name="**/*.java"/>
-        </fileset>
         <fileset dir="${snap.root}/snap-external/snap-dexmaker/src/main/java">
           <include name="**/*.java"/>
         </fileset>
@@ -205,9 +196,75 @@
       <antcall target="-bundle">
         <param name="snap.artifact" value="snap-android"/>   
       </antcall>            
-   </target>   
+   </target>  
 
+   <target name="-bundle-snap-agent" depends="-layout">
+      <delete dir="${main.source.path}"/>
+      <mkdir dir="${main.source.path}"/>
+      <copy todir="${root.path}" overwrite="true">
+         <fileset dir="${template.path}">
+            <include name="pom.xml"/>
+         </fileset>
+         <filterset>
+            <filter token="snap.artifact" value="snap-agent"/>
+            <filter token="snap.deps" value="&lt;dependencies&gt;&lt;dependency&gt;&lt;groupId&gt;org.snapscript&lt;/groupId&gt;&lt;artifactId&gt;snap&lt;/artifactId&gt;&lt;version&gt;${snap.version}&lt;/version&gt;&lt;/dependency&gt;&lt;/dependencies&gt;"/> 
+            <filter token="snap.name" value="Snap Agent"/>
+            <filter token="snap.repo" value="snap-develop"/>
+            <filtersfile file="${root.path}/build.properties"/>
+         </filterset>
+      </copy>
+      <copy todir="${main.source.path}" overwrite="true">
+        <fileset dir="${snap.root}/snap-develop/snap-agent/src/main/java">
+          <include name="**/*.java"/>
+        </fileset>
+      </copy>
+      <exec executable="${maven.exe}">
+         <arg value="clean"/>
+         <arg value="install"/>
+      </exec>
+      <antcall target="-bundle">
+        <param name="snap.artifact" value="snap-agent"/>   
+      </antcall>            
+   </target>   
    
+   <target name="-bundle-snap-external" depends="-layout">
+      <delete dir="${main.source.path}"/>
+      <mkdir dir="${main.source.path}"/>
+      <copy todir="${root.path}" overwrite="true">
+         <fileset dir="${template.path}">
+            <include name="pom.xml"/>
+         </fileset>
+         <filterset>
+            <filter token="snap.artifact" value="snap-external"/>
+            <filter token="snap.deps" value="&lt;dependencies&gt;&lt;dependency&gt;&lt;groupId&gt;org.snapscript&lt;/groupId&gt;&lt;artifactId&gt;snap&lt;/artifactId&gt;&lt;version&gt;${snap.version}&lt;/version&gt;&lt;/dependency&gt;&lt;/dependencies&gt;"/>
+            <filter token="snap.name" value="Snap External"/>
+            <filter token="snap.repo" value="snap-external"/>
+            <filtersfile file="${root.path}/build.properties"/>
+         </filterset>
+      </copy>
+      <copy todir="${main.source.path}" overwrite="true">
+        <fileset dir="${snap.root}/snap-external/snap-bridge/src/main/java">
+          <include name="**/*.java"/>
+        </fileset>
+        <fileset dir="${snap.root}/snap-external/snap-dexmaker/src/main/java">
+          <include name="**/*.java"/>
+        </fileset>
+        <fileset dir="${snap.root}/snap-external/snap-asm/src/main/java">
+          <include name="**/*.java"/>
+        </fileset>
+        <fileset dir="${snap.root}/snap-external/snap-cglib/src/main/java">
+          <include name="**/*.java"/>
+        </fileset>   
+      </copy>
+      <exec executable="${maven.exe}">
+         <arg value="clean"/>
+         <arg value="install"/>
+      </exec>
+      <antcall target="-bundle">
+        <param name="snap.artifact" value="snap-external"/>   
+      </antcall>            
+   </target>  
+ 
    <target name="-bundle-snap-all" depends="-layout">
       <delete dir="${main.source.path}"/>
       <mkdir dir="${main.source.path}"/>
@@ -217,6 +274,9 @@
          </fileset>
          <filterset>
             <filter token="snap.artifact" value="snap-all"/>
+            <filter token="snap.name" value="Snap All"/>
+            <filter token="snap.repo" value="snap"/>
+            <filter token="snap.deps" value=""/>
             <filtersfile file="${root.path}/build.properties"/>
          </filterset>
       </copy>
@@ -234,6 +294,9 @@
           <include name="**/*.java"/>
         </fileset>
         <fileset dir="${snap.root}/snap/snap-core/src/main/java">
+          <include name="**/*.java"/>
+        </fileset>
+        <fileset dir="${snap.root}/snap-develop/snap-agent/src/main/java">
           <include name="**/*.java"/>
         </fileset>
         <fileset dir="${snap.root}/snap-external/snap-dexmaker/src/main/java">
@@ -260,7 +323,9 @@
    
    <target name="bundle-all" depends="-prepare">
       <antcall target="-bundle-snap"/>
+      <antcall target="-bundle-snap-agent"/>
       <antcall target="-bundle-snap-android"/>
+      <antcall target="-bundle-snap-external"/>
       <antcall target="-bundle-snap-all"/>            
    </target>
 
