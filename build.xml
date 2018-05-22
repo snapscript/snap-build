@@ -159,7 +159,12 @@
       </copy>
       <copy todir="${main.resource.path}" overwrite="true">
         <fileset dir="${snap.root}/snap/snap-parse/src/main/resources">
-          <include name="**/*.bnf"/>
+          <include name="**/*.txt"/>
+        </fileset>
+      </copy>
+      <copy todir="${main.resource.path}" overwrite="true">
+        <fileset dir="${snap.root}/snap/snap-core/src/main/resources">
+          <include name="**/*.txt"/>
         </fileset>
       </copy>
       <exec executable="${maven.exe}">
@@ -320,7 +325,12 @@
       </copy>
       <copy todir="${main.resource.path}" overwrite="true">
         <fileset dir="${snap.root}/snap/snap-parse/src/main/resources">
-          <include name="**/*.bnf"/>
+          <include name="**/*.txt"/>
+        </fileset>
+      </copy>
+      <copy todir="${main.resource.path}" overwrite="true">
+        <fileset dir="${snap.root}/snap/snap-core/src/main/resources">
+          <include name="**/*.txt"/>
         </fileset>
       </copy>
       <exec executable="${maven.exe}">
