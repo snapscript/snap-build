@@ -192,10 +192,10 @@
          </filterset>
       </copy>
       <copy todir="${main.source.path}" overwrite="true">
-        <fileset dir="${snap.root}/snap-external/snap-dexmaker/src/main/java">
+        <fileset dir="${snap.root}/snap-external/snap-dx/src/main/java">
           <include name="**/*.java"/>
         </fileset>
-        <fileset dir="${snap.root}/snap-external/snap-bridge/src/main/java">
+        <fileset dir="${snap.root}/snap-external/snap-platform/src/main/java">
           <include name="**/*.java"/>
           <exclude name="**/standard/**"/>
         </fileset>
@@ -225,7 +225,7 @@
          </filterset>
       </copy>
       <copy todir="${main.source.path}" overwrite="true">
-        <fileset dir="${snap.root}/snap-develop/snap-agent/src/main/java">
+        <fileset dir="${snap.root}/snap-develop/snap-studio-agent/src/main/java">
           <include name="**/*.java"/>
         </fileset>
       </copy>
@@ -254,10 +254,10 @@
          </filterset>
       </copy>
       <copy todir="${main.source.path}" overwrite="true">
-        <fileset dir="${snap.root}/snap-external/snap-bridge/src/main/java">
+        <fileset dir="${snap.root}/snap-external/snap-platform/src/main/java">
           <include name="**/*.java"/>
         </fileset>
-        <fileset dir="${snap.root}/snap-external/snap-dexmaker/src/main/java">
+        <fileset dir="${snap.root}/snap-external/snap-dx/src/main/java">
           <include name="**/*.java"/>
         </fileset>
         <fileset dir="${snap.root}/snap-external/snap-asm/src/main/java">
@@ -307,13 +307,13 @@
         <fileset dir="${snap.root}/snap/snap-core/src/main/java">
           <include name="**/*.java"/>
         </fileset>
-        <fileset dir="${snap.root}/snap-develop/snap-agent/src/main/java">
+        <fileset dir="${snap.root}/snap-develop/snap-studio-agent/src/main/java">
           <include name="**/*.java"/>
         </fileset>
-        <fileset dir="${snap.root}/snap-external/snap-dexmaker/src/main/java">
+        <fileset dir="${snap.root}/snap-external/snap-dx/src/main/java">
           <include name="**/*.java"/>
         </fileset>
-        <fileset dir="${snap.root}/snap-external/snap-bridge/src/main/java">
+        <fileset dir="${snap.root}/snap-external/snap-platform/src/main/java">
           <include name="**/*.java"/>
         </fileset>
         <fileset dir="${snap.root}/snap-external/snap-asm/src/main/java">
