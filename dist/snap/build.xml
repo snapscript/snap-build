@@ -23,7 +23,7 @@
       <copy file="${download.dir}/${ant.project.name}.jar" tofile="${build.dir}/${ant.project.name}.jar"/>      
       <launch4j configFile="./assets/${ant.project.name}.xml" />
       <copy file="assets/README.txt" tofile="dist/README.txt"/>
-      <zip destfile="${download.dir}/${ant.project.name}.zip" basedir="${build.dir}" includes="*.exe,*.jar,README.txt"/>
+      <zip destfile="${download.dir}/${ant.project.name}.zip" basedir="${build.dir}" includes="*.exe,*.jar,*.vim,README.txt"/>
       <copy file="${build.dir}/${ant.project.name}.exe" tofile="${download.dir}/${ant.project.name}.exe"/>
       <delete dir="${build.dir}"/>       
 	</target>
