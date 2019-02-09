@@ -24,7 +24,7 @@
       <launch4j configFile="./assets/${ant.project.name}.xml" />
       <copy file="assets/snapd.ini" tofile="${build.dir}/snapd.ini"/>
       <copy file="assets/README.txt" tofile="${build.dir}/README.txt"/>
-      <zip destfile="${download.dir}/${ant.project.name}.zip" basedir="${build.dir}" includes="*.exe,*.ini,*.jar,README.txt"/>
+      <zip destfile="${download.dir}/${ant.project.name}.zip" basedir="${build.dir}" includes="*.exe,*.ini,*.vim,*.jar,README.txt"/>
       <copy file="${build.dir}/${ant.project.name}.exe" tofile="${download.dir}/${ant.project.name}.exe"/>
       <delete dir="${build.dir}"/>         
 	</target>
