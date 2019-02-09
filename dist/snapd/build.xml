@@ -1,0 +1,36 @@
+<project name="snapd" default="exe" basedir=".">
+	<property name="src" location="src" />
+	<property name="lib" location="lib" />
+	<property name="build" location="build" />
+	<property name="launch4j.dir" location="C:\Work\tools\launch4j" />
+
+	<path id="dist.classpath">
+		<pathelement path="${build}" />
+		<fileset dir="${lib}">
+			<include name="**/*.jar" />
+		</fileset>
+	</path>
+
+	<target name="init">
+		<tstamp />
+		<mkdir dir="${build}" />
+	</target>
+
+	<target name="exe">
+		<taskdef name="launch4j" classname="net.sf.launch4j.ant.Launch4jTask" classpath="${launch4j.dir}/launch4j.jar:${launch4j.dir}/lib/xstream.jar" />      
+      <delete dir="dist"/>     
+      <delete file="${ant.project.name}.zip"/>
+      <mkdir dir="dist"/>
+      <launch4j configFile="./src/${ant.project.name}.xml" />
+      <copy file="src/snapd.ini" tofile="dist/snapd.ini"/>
+      <copy file="src/README.txt" tofile="dist/README.txt"/>
+      <zip destfile="${ant.project.name}.zip" basedir="dist" includes="*.exe,*.ini,README.txt"/>
+      <delete dir="dist"/>         
+	</target>
+
+	<target name="clean" description="clean up">
+		<delete dir="${build}" />
+		<delete file="${ant.project.name}.jar" />
+		<delete file="${ant.project.name}.exe" />
+	</target>
+</project>
