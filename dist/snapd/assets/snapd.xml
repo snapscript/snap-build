@@ -1,6 +1,6 @@
 <launch4jConfig>
   <headerType>gui</headerType>
-  <jar>../../../../snap-site/www.snapscript.org/download/snapd.jar</jar>
+  <jar>../dist/snapd.jar</jar>
   <dontWrapJar>false</dontWrapJar>
   <outfile>../dist/snapd.exe</outfile>
   <errTitle>Snap Studio</errTitle>

@@ -20,10 +20,11 @@
       <delete dir="${build.dir}"/>     
       <delete file="${download.dir}/${ant.project.name}.zip"/>
       <mkdir dir="${build.dir}"/>
+      <copy file="${download.dir}/${ant.project.name}.jar" tofile="${build.dir}/${ant.project.name}.jar"/>       
       <launch4j configFile="./assets/${ant.project.name}.xml" />
       <copy file="assets/snapd.ini" tofile="${build.dir}/snapd.ini"/>
       <copy file="assets/README.txt" tofile="${build.dir}/README.txt"/>
-      <zip destfile="${download.dir}/${ant.project.name}.zip" basedir="${build.dir}" includes="*.exe,*.ini,README.txt"/>
+      <zip destfile="${download.dir}/${ant.project.name}.zip" basedir="${build.dir}" includes="*.exe,*.ini,*.jar,README.txt"/>
       <copy file="${build.dir}/${ant.project.name}.exe" tofile="${download.dir}/${ant.project.name}.exe"/>
       <delete dir="${build.dir}"/>         
 	</target>
