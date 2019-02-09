@@ -21,8 +21,8 @@
       <delete dir="dist"/>     
       <delete file="${ant.project.name}.zip"/>
       <mkdir dir="dist"/>      
-      <launch4j configFile="./src/${ant.project.name}.xml" />
-      <copy file="src/README.txt" tofile="dist/README.txt"/>
+      <launch4j configFile="./assets/${ant.project.name}.xml" />
+      <copy file="assets/README.txt" tofile="dist/README.txt"/>
       <zip destfile="${ant.project.name}.zip" basedir="dist" includes="*.exe,README.txt"/>
       <delete dir="dist"/>         
 	</target>
